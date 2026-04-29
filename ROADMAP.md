@@ -4,9 +4,9 @@ Este documento descreve as fases de desenvolvimento do projeto. Cada fase tem um
 
 ---
 
-## Fase 0: Fundacao (atual)
+## Fase 0: Fundacao
 
-**Status:** Em progresso
+**Status:** Concluida
 
 **Objetivo:** Estrutura do projeto, documentacao base e contratos (interfaces).
 
@@ -20,10 +20,10 @@ Este documento descreve as fases de desenvolvimento do projeto. Cada fase tem um
 - [x] CONTRIBUTING.md com guidelines
 - [x] CLAUDE.md para AI agents
 - [x] GLOSSARY.md com termos fiscais
-- [ ] Contratos (interfaces) de todos os providers
-- [ ] Tipos base das entidades (NFe, Emitente, Destinatario, Produto)
-- [ ] Schemas Zod para validacao de entrada
-- [ ] Classe de erros customizados
+- [x] Contratos (interfaces) de todos os providers
+- [x] Tipos base das entidades (NFe, Emitente, Destinatario, Produto, Transporte, Pagamento, Endereco)
+- [x] Schemas Zod para validacao de entrada (todos os schemas)
+- [x] Classe de erros customizados (NFeError, SchemaValidationError, SefazRejectError, CertificateError)
 
 **Criterio de conclusao:** Todos os contratos definidos, tipos compilando, testes basicos passando.
 
@@ -31,22 +31,23 @@ Este documento descreve as fases de desenvolvimento do projeto. Cada fase tem um
 
 ## Fase 1: Geracao de XML
 
-**Status:** Pendente
+**Status:** Concluida
 
 **Objetivo:** Gerar XML valido de NFe a partir das entidades. Foco inicial na SEFAZ MT (Mato Grosso).
 
-- [ ] Entidades completas (NFe, Emitente, Destinatario, Produto, ICMS, PIS, COFINS, Transporte, Pagamento)
-- [ ] `DefaultXmlBuilder` que converte entidades em XML no layout SEFAZ (versao 4.00)
-- [ ] Helpers: geracao de chave de acesso (44 digitos), digito verificador (mod11)
-- [ ] Constantes: codigos IBGE (UF + municipio — priorizando MT), tabela CFOP, tabela CST
-- [ ] Validacao de CNPJ e CPF
-- [ ] Testes unitarios cobrindo geracao de XML
+- [x] Entidades completas (NFe, Emitente, Destinatario, Produto, ICMS, PIS, COFINS, Transporte, Pagamento)
+- [x] `DefaultXmlBuilder` que converte entidades em XML no layout SEFAZ (versao 4.00)
+- [x] Helpers: geracao de chave de acesso (44 digitos), digito verificador (mod11)
+- [x] Constantes: codigos IBGE (UF + municipio — priorizando MT), tabela CFOP, tabela CST/CSOSN, formas de pagamento
+- [x] Validacao de CNPJ e CPF
+- [x] Testes unitarios cobrindo geracao de XML (34 testes passando)
+- [ ] Validacao do XML contra XSD oficial da SEFAZ (movido para Fase 3)
 
 **Criterio de conclusao:** XML gerado passa na validacao contra XSD oficial da SEFAZ.
 
 ---
 
-## Fase 2: Assinatura Digital
+## Fase 2: Assinatura Digital (proximo)
 
 **Status:** Pendente
 

@@ -9,25 +9,30 @@ const ENVELOPED_SIGNATURE = 'http://www.w3.org/2000/09/xmldsig#enveloped-signatu
 const SHA1_ALGORITHM = 'http://www.w3.org/2000/09/xmldsig#sha1';
 const RSA_SHA1_ALGORITHM = 'http://www.w3.org/2000/09/xmldsig#rsa-sha1';
 
+/**
+ * Elementos que podem ser assinados, em ordem de prioridade.
+ * O signer tenta encontrar o primeiro match no XML.
+ */
+const SIGNABLE_ELEMENTS = ['infNFe', 'infEvento', 'infInut'];
+
+/**
+ * Mapeamento de elemento assinado para o elemento pai onde a Signature deve ser inserida.
+ */
+const PARENT_ELEMENTS: Record<string, string> = {
+  infNFe: 'NFe',
+  infEvento: 'evento',
+  infInut: 'inutNFe'
+};
+
 export class DefaultXmlSigner implements XmlSigner {
   sign(xml: string, certificate: CertificateData): string {
-    const infNFeMatch = xml.match(/<infNFe[^>]*>[\s\S]*<\/infNFe>/);
-    if (!infNFeMatch) {
-      throw new Error('Elemento <infNFe> nao encontrado no XML');
-    }
+    const { elementName, elementContent, id } = this.findSignableElement(xml);
 
-    const idMatch = infNFeMatch[0].match(/Id="([^"]+)"/);
-    if (!idMatch) {
-      throw new Error('Atributo Id nao encontrado em <infNFe>');
-    }
+    const referenceUri = `#${id}`;
+    const canonicalized = canonicalize(elementContent);
 
-    const referenceUri = `#${idMatch[1]}`;
-    const infNFeCanonicalized = canonicalize(infNFeMatch[0]);
+    const digest = createHash('sha1').update(canonicalized).digest('base64');
 
-    // Digest do conteudo de <infNFe>
-    const digest = createHash('sha1').update(infNFeCanonicalized).digest('base64');
-
-    // Montar SignedInfo
     const signedInfo =
       `<SignedInfo xmlns="${SIGNATURE_NS}">` +
       `<CanonicalizationMethod Algorithm="${C14N_ALGORITHM}"/>` +
@@ -44,18 +49,15 @@ export class DefaultXmlSigner implements XmlSigner {
 
     const signedInfoCanonicalized = canonicalize(signedInfo);
 
-    // Assinar com RSA-SHA1
     const signer = createSign('RSA-SHA1');
     signer.update(signedInfoCanonicalized);
     const signatureValue = signer.sign(certificate.privateKey, 'base64');
 
-    // Extrair certificado X509 (base64, sem headers PEM)
     const x509Content = certificate.certPem
       .replace(/-----BEGIN CERTIFICATE-----/g, '')
       .replace(/-----END CERTIFICATE-----/g, '')
       .replace(/\s/g, '');
 
-    // Montar bloco Signature
     const signature =
       `<Signature xmlns="${SIGNATURE_NS}">` +
       signedInfo +
@@ -67,7 +69,31 @@ export class DefaultXmlSigner implements XmlSigner {
       '</KeyInfo>' +
       '</Signature>';
 
-    // Inserir Signature apos </infNFe> dentro de <NFe>
-    return xml.replace('</infNFe></NFe>', `</infNFe>${signature}</NFe>`);
+    const parentTag = PARENT_ELEMENTS[elementName];
+    return xml.replace(
+      `</${elementName}></${parentTag}>`,
+      `</${elementName}>${signature}</${parentTag}>`
+    );
+  }
+
+  private findSignableElement(xml: string): {
+    elementName: string;
+    elementContent: string;
+    id: string;
+  } {
+    for (const tag of SIGNABLE_ELEMENTS) {
+      const match = xml.match(new RegExp(`<${tag}[^>]*>[\\s\\S]*<\\/${tag}>`));
+      if (match) {
+        const idMatch = match[0].match(/Id="([^"]+)"/);
+        if (!idMatch) {
+          throw new Error(`Atributo Id nao encontrado em <${tag}>`);
+        }
+        return { elementName: tag, elementContent: match[0], id: idMatch[1] };
+      }
+    }
+
+    throw new Error(
+      `Nenhum elemento assinavel encontrado no XML. Esperado: ${SIGNABLE_ELEMENTS.join(', ')}`
+    );
   }
 }

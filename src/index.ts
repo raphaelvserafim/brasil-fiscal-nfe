@@ -40,6 +40,11 @@ export { TransmitNFeUseCase } from './application/use-cases/TransmitNFeUseCase';
 export { ConsultProtocolUseCase } from './application/use-cases/ConsultProtocolUseCase';
 export { DistribuicaoDFeUseCase } from './application/use-cases/DistribuicaoDFeUseCase';
 export type { DistribuicaoResult, DFeDocument } from './application/use-cases/DistribuicaoDFeUseCase';
+export { CancelaNFeUseCase } from './application/use-cases/CancelaNFeUseCase';
+export type { EventoResult } from './application/use-cases/CancelaNFeUseCase';
+export { CartaCorrecaoUseCase } from './application/use-cases/CartaCorrecaoUseCase';
+export { InutilizaNFeUseCase } from './application/use-cases/InutilizaNFeUseCase';
+export type { InutilizacaoResult } from './application/use-cases/InutilizaNFeUseCase';
 
 // SEFAZ URLs
 export { getSefazUrl, ibgeToUf, UF_AUTORIZADOR, AUTORIZADOR_URLS } from './shared/constants/sefaz-urls';

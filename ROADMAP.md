@@ -47,22 +47,22 @@ Este documento descreve as fases de desenvolvimento do projeto. Cada fase tem um
 
 ---
 
-## Fase 2: Assinatura Digital (proximo)
+## Fase 2: Assinatura Digital
 
-**Status:** Pendente
+**Status:** Concluida
 
 **Objetivo:** Assinar o XML da NFe com certificado digital A1.
 
-- [ ] `A1CertificateProvider` para carregar .pfx/.p12
-- [ ] `DefaultXmlSigner` com XMLDSig (RSA-SHA1) via `node:crypto`
-- [ ] Canonicalizacao C14N do XML antes da assinatura
-- [ ] Testes com certificados de teste
+- [x] `A1CertificateProvider` para carregar .pfx/.p12
+- [x] `DefaultXmlSigner` com XMLDSig (RSA-SHA1) via `node:crypto`
+- [x] Canonicalizacao C14N do XML antes da assinatura
+- [x] Testes com certificados de teste (18 testes — 4 certificado, 8 assinatura, 6 canonicalizacao)
 
 **Criterio de conclusao:** XML assinado eh valido e verificavel.
 
 ---
 
-## Fase 3: Validacao XSD
+## Fase 3: Validacao XSD (proximo)
 
 **Status:** Pendente
 

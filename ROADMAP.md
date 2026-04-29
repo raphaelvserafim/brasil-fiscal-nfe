@@ -100,17 +100,18 @@ Este documento descreve as fases de desenvolvimento do projeto. Cada fase tem um
 
 ## Fase 4.5: Distribuicao DFe (Consulta de NFe recebidas)
 
-**Status:** Pendente
+**Status:** Concluida
 
 **Objetivo:** Permitir que uma empresa consulte NFes emitidas contra seu CNPJ via servico `NFeDistribuicaoDFe` do Ambiente Nacional.
 
-- [ ] URLs do servico `NFeDistribuicaoDFe` (AN — Ambiente Nacional, homologacao e producao)
-- [ ] Montagem do envelope SOAP para `NFeDistribuicaoDFe` (consulta por NSU, ultimo NSU, ou chave de acesso)
-- [ ] Parse da resposta (resumos `resNFe`, XMLs completos `procNFe`, paginacao via `ultNSU`/`maxNSU`)
-- [ ] Descompactacao dos documentos retornados (GZip base64)
-- [ ] `DistribuicaoDFeUseCase` com metodos para consulta por ultimo NSU e por chave
-- [ ] Tipos de retorno (`DFeDocument`, `DFeDistribuicaoResult`)
-- [ ] Testes unitarios com respostas mockadas
+- [x] URLs do servico `NFeDistribuicaoDFe` (AN — Ambiente Nacional, homologacao e producao)
+- [x] Montagem do envelope SOAP para `NFeDistribuicaoDFe` (consulta por ultimo NSU e por chave de acesso)
+- [x] Parse da resposta (resumos `resNFe`, XMLs completos `procNFe`, paginacao via `ultNSU`/`maxNSU`)
+- [x] Descompactacao dos documentos retornados (GZip base64 via `node:zlib`)
+- [x] `DistribuicaoDFeUseCase` com `consultarPorNSU()` e `consultarPorChave()`
+- [x] Tipos de retorno (`DFeDocument`, `DistribuicaoResult`)
+- [x] Paginacao manual — caller controla o ritmo via `ultNSU`
+- [x] 19 testes novos (118 testes totais passando)
 
 **Criterio de conclusao:** Consulta de NFes recebidas funcionando em homologacao, com paginacao e descompactacao.
 

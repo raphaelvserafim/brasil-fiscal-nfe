@@ -62,21 +62,23 @@ Este documento descreve as fases de desenvolvimento do projeto. Cada fase tem um
 
 ---
 
-## Fase 3: Validacao XSD (proximo)
+## Fase 3: Validacao XSD
 
-**Status:** Pendente
+**Status:** Concluida
 
 **Objetivo:** Validar XML contra schemas XSD oficiais da SEFAZ.
 
-- [ ] `XsdSchemaValidator` que valida XML gerado
-- [ ] Schemas XSD da NFe 4.00 incluidos ou referenciados
-- [ ] Erros descritivos indicando exatamente qual campo falhou
+- [x] `XsdSchemaValidator` que valida XML gerado (via xmllint, mesmo approach do openssl)
+- [x] Schemas XSD da NFe 4.00 incluidos (nfe_v4.00.xsd, leiauteNFe_v4.00.xsd, tiposBasico_v4.00.xsd, xmldsig-core-schema_v1.01.xsd, enviNFe_v4.00.xsd)
+- [x] Erros descritivos indicando exatamente qual campo falhou
+- [x] Correcoes no DefaultXmlBuilder reveladas pela validacao XSD (serie/nNF sem zero-padding, verProc <= 20 chars, PIS/COFINS CST 49 usando PISOutr/COFINSOutr)
+- [x] 5 testes de validacao XSD (57 testes totais passando)
 
 **Criterio de conclusao:** XMLs invalidos sao rejeitados com mensagens claras.
 
 ---
 
-## Fase 4: Transmissao para SEFAZ
+## Fase 4: Transmissao para SEFAZ (proximo)
 
 **Status:** Pendente
 

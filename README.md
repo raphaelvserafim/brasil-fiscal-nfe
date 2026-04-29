@@ -30,15 +30,24 @@ npm install pdfkit
 - URLs de todos os 27 estados (14 autorizadores)
 - Providers plugaveis para certificado, transporte, XML e assinatura
 
-## Uso
-
-### 1. Gerar XML
+## Quick Start
 
 ```typescript
-import { DefaultXmlBuilder } from '@brasil-fiscal/nfe';
+import { NFeCore } from '@brasil-fiscal/nfe';
+import { readFileSync } from 'node:fs';
 
-const builder = new DefaultXmlBuilder();
-const xml = builder.build({
+const nfe = NFeCore.create({
+  pfx: readFileSync('./certificado.pfx'),
+  senha: 'senha-do-certificado',
+  ambiente: 'homologacao',  // ou 'producao'
+  uf: 'MT'
+});
+```
+
+### Transmitir NFe
+
+```typescript
+const result = await nfe.transmitir({
   identificacao: {
     naturezaOperacao: 'Venda de mercadoria',
     tipoOperacao: 1,
@@ -101,79 +110,23 @@ const xml = builder.build({
     pagamentos: [{ formaPagamento: '01', valor: 99.80 }]
   }
 });
-```
 
-### 2. Assinar com certificado A1
-
-```typescript
-import { A1CertificateProvider, DefaultXmlSigner } from '@brasil-fiscal/nfe';
-import { readFileSync } from 'node:fs';
-
-const certificate = new A1CertificateProvider(
-  readFileSync('./certificado.pfx'),
-  'senha-do-certificado'
-);
-
-const signer = new DefaultXmlSigner();
-const cert = await certificate.load();
-const signedXml = signer.sign(xml, cert);
-```
-
-### 3. Transmitir para SEFAZ
-
-```typescript
-import {
-  NodeHttpSefazTransport,
-  TransmitNFeUseCase,
-  DefaultXmlBuilder,
-  DefaultXmlSigner,
-  A1CertificateProvider
-} from '@brasil-fiscal/nfe';
-
-const useCase = new TransmitNFeUseCase({
-  xmlBuilder: new DefaultXmlBuilder(),
-  xmlSigner: new DefaultXmlSigner(),
-  certificate: new A1CertificateProvider(pfxBuffer, 'senha'),
-  transport: new NodeHttpSefazTransport(),
-  environment: 'homologation',
-  uf: 'MT'
-});
-
-const result = await useCase.execute(nfeProps);
-console.log(result.autorizada);    // true
-console.log(result.protocolo);     // '151240000012345'
-console.log(result.chaveAcesso);   // 44 digitos
-```
-
-### 4. Consultar protocolo
-
-```typescript
-import { ConsultProtocolUseCase } from '@brasil-fiscal/nfe';
-
-const consulta = new ConsultProtocolUseCase({
-  certificate,
-  transport: new NodeHttpSefazTransport(),
-  environment: 'homologation'
-});
-
-const result = await consulta.execute('51240412345678000195550010000000011234567890');
-console.log(result.codigoStatus); // '100'
+console.log(result.autorizada);   // true
 console.log(result.protocolo);    // '151240000012345'
+console.log(result.chaveAcesso);  // 44 digitos
 ```
 
-### 5. Cancelar NFe
+### Consultar protocolo
 
 ```typescript
-import { CancelaNFeUseCase } from '@brasil-fiscal/nfe';
+const result = await nfe.consultarProtocolo('51240412345678000195550010000000011234567890');
+console.log(result.codigoStatus); // '100'
+```
 
-const cancelar = new CancelaNFeUseCase({
-  certificate,
-  transport: new NodeHttpSefazTransport(),
-  xmlSigner: new DefaultXmlSigner(),
-  environment: 'homologation'
-});
+### Cancelar NFe
 
-const result = await cancelar.execute({
+```typescript
+await nfe.cancelar({
   chaveAcesso: '51240412345678000195550010000000011234567890',
   cnpj: '12345678000195',
   protocolo: '151240000012345',
@@ -181,19 +134,10 @@ const result = await cancelar.execute({
 });
 ```
 
-### 6. Carta de Correcao (CC-e)
+### Carta de Correcao (CC-e)
 
 ```typescript
-import { CartaCorrecaoUseCase } from '@brasil-fiscal/nfe';
-
-const cce = new CartaCorrecaoUseCase({
-  certificate,
-  transport: new NodeHttpSefazTransport(),
-  xmlSigner: new DefaultXmlSigner(),
-  environment: 'homologation'
-});
-
-const result = await cce.execute({
+await nfe.cartaCorrecao({
   chaveAcesso: '51240412345678000195550010000000011234567890',
   cnpj: '12345678000195',
   correcao: 'Correcao do endereco do destinatario para Rua ABC 123',
@@ -201,21 +145,11 @@ const result = await cce.execute({
 });
 ```
 
-### 7. Inutilizar numeracao
+### Inutilizar numeracao
 
 ```typescript
-import { InutilizaNFeUseCase } from '@brasil-fiscal/nfe';
-
-const inutilizar = new InutilizaNFeUseCase({
-  certificate,
-  transport: new NodeHttpSefazTransport(),
-  xmlSigner: new DefaultXmlSigner(),
-  environment: 'homologation'
-});
-
-const result = await inutilizar.execute({
+await nfe.inutilizar({
   cnpj: '12345678000195',
-  uf: 'MT',
   ano: 2024,
   serie: 1,
   numeroInicial: 10,
@@ -224,79 +158,67 @@ const result = await inutilizar.execute({
 });
 ```
 
-### 8. Consultar NFes recebidas (Distribuicao DFe)
+### Consultar NFes recebidas (Distribuicao DFe)
 
 ```typescript
-import { DistribuicaoDFeUseCase } from '@brasil-fiscal/nfe';
-
-const distribuicao = new DistribuicaoDFeUseCase({
-  certificate,
-  transport: new NodeHttpSefazTransport(),
-  environment: 'homologation'
-});
-
 // Por ultimo NSU (paginacao manual)
-const result = await distribuicao.consultarPorNSU('12345678000195', 'MT', '0');
+const result = await nfe.distribuicaoPorNSU('12345678000195');
 console.log(result.documentos);  // Array de { nsu, schema, xml }
 console.log(result.ultNSU);      // Usar como input da proxima chamada
 
 // Por chave de acesso
-const result2 = await distribuicao.consultarPorChave(
+const result2 = await nfe.distribuicaoPorChave(
   '12345678000195',
-  'MT',
   '51240412345678000195550010000000011234567890'
 );
 ```
 
-### 9. Manifestacao do Destinatario
+### Manifestacao do Destinatario
 
 ```typescript
-import { ManifestacaoUseCase } from '@brasil-fiscal/nfe';
-
-const manifestacao = new ManifestacaoUseCase({
-  certificate,
-  transport: new NodeHttpSefazTransport(),
-  xmlSigner: new DefaultXmlSigner(),
-  environment: 'homologation'
-});
-
-// Confirmar operacao
-await manifestacao.confirmar({
+const input = {
   chaveAcesso: '51240412345678000195550010000000011234567890',
   cnpj: '12345678000195'
-});
+};
 
-// Ciencia da operacao
-await manifestacao.ciencia({ chaveAcesso: '...', cnpj: '...' });
-
-// Desconhecer operacao (requer justificativa)
-await manifestacao.desconhecer({
-  chaveAcesso: '...',
-  cnpj: '...',
-  justificativa: 'Nao reconheco esta operacao comercial'
-});
-
-// Operacao nao realizada (requer justificativa)
-await manifestacao.naoRealizada({
-  chaveAcesso: '...',
-  cnpj: '...',
-  justificativa: 'Mercadoria devolvida ao remetente'
-});
+await nfe.manifestar.confirmar(input);
+await nfe.manifestar.ciencia(input);
+await nfe.manifestar.desconhecer({ ...input, justificativa: 'Nao reconheco esta operacao' });
+await nfe.manifestar.naoRealizada({ ...input, justificativa: 'Mercadoria devolvida' });
 ```
 
-### 10. Gerar DANFE (PDF)
+### Gerar DANFE (PDF)
 
 ```typescript
-import { GerarDanfeUseCase } from '@brasil-fiscal/nfe';
 import { writeFileSync } from 'node:fs';
 
-const danfe = new GerarDanfeUseCase();
-const pdf = await danfe.execute(xmlAutorizado); // XML string com <protNFe>
-
+const pdf = await nfe.danfe(xmlAutorizado);
 writeFileSync('danfe.pdf', pdf);
 ```
 
 > Requer `pdfkit` instalado: `npm install pdfkit`
+
+### Tratamento de erros
+
+```typescript
+import { SefazRejectError, CertificateError, NFeError } from '@brasil-fiscal/nfe';
+
+try {
+  await nfe.transmitir(nfeData);
+} catch (error) {
+  if (error instanceof CertificateError) {
+    console.error('Certificado:', error.message);
+  } else if (error instanceof SefazRejectError) {
+    console.error(`[${error.cStat}] ${error.xMotivo}`);
+  } else if (error instanceof NFeError) {
+    console.error('Erro:', error.message);
+  }
+}
+```
+
+## Uso avancado
+
+Para quem precisa de controle total, os providers e use cases individuais tambem estao disponiveis. Veja [docs/EXAMPLES.md](docs/EXAMPLES.md) para exemplos com a API de baixo nivel.
 
 ## Providers plugaveis
 
@@ -315,7 +237,7 @@ Para criar seu proprio provider, veja [docs/PROVIDERS.md](docs/PROVIDERS.md).
 
 ```
 src/
-  core/           Tipos e configuracao
+  core/           Fachada (NFeCore) e tipos
   domain/         Entidades puras e schemas Zod
   contracts/      Interfaces dos providers
   application/    Use cases (transmit, consult, cancel, etc.)
@@ -356,7 +278,7 @@ Para regenerar: `npx tsx scripts/generate-examples.ts`
 git clone https://github.com/brasil-fiscal/nfe.git
 cd nfe
 npm install
-npm test        # 185 testes
+npm test        # 200 testes
 npm run lint
 npm run build
 ```

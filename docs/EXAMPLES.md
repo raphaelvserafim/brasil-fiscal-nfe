@@ -4,7 +4,90 @@ Exemplos completos de como usar a lib. Todos os exemplos usam SEFAZ MT em homolo
 
 ---
 
-## Setup comum
+## Uso recomendado: NFeCore
+
+A forma mais simples de usar a lib. Configure uma vez, use em tudo:
+
+```typescript
+import { NFeCore } from '@brasil-fiscal/nfe';
+import { readFileSync } from 'node:fs';
+
+const nfe = NFeCore.create({
+  pfx: readFileSync('./certificado.pfx'),
+  senha: 'senha-do-certificado',
+  ambiente: 'homologacao',
+  uf: 'MT'
+});
+
+// Transmitir
+const result = await nfe.transmitir(nfeData);
+
+// Consultar
+const status = await nfe.consultarProtocolo(result.chaveAcesso);
+
+// Cancelar
+await nfe.cancelar({
+  chaveAcesso: result.chaveAcesso,
+  cnpj: '12345678000195',
+  protocolo: result.protocolo!,
+  justificativa: 'Erro na emissao da nota fiscal eletronica'
+});
+
+// Carta de correcao
+await nfe.cartaCorrecao({
+  chaveAcesso: result.chaveAcesso,
+  cnpj: '12345678000195',
+  correcao: 'Correcao do endereco do destinatario para Rua ABC 123'
+});
+
+// Inutilizar numeracao
+await nfe.inutilizar({
+  cnpj: '12345678000195',
+  ano: 2024,
+  serie: 1,
+  numeroInicial: 10,
+  numeroFinal: 20,
+  justificativa: 'Numeracao pulada por erro no sistema emissor'
+});
+
+// Distribuicao DFe
+const docs = await nfe.distribuicaoPorNSU('12345678000195');
+const doc = await nfe.distribuicaoPorChave('12345678000195', result.chaveAcesso);
+
+// Manifestacao do destinatario
+await nfe.manifestar.confirmar({ chaveAcesso: '...', cnpj: '12345678000195' });
+await nfe.manifestar.ciencia({ chaveAcesso: '...', cnpj: '12345678000195' });
+await nfe.manifestar.desconhecer({
+  chaveAcesso: '...', cnpj: '12345678000195',
+  justificativa: 'Nao reconheco esta operacao comercial'
+});
+
+// DANFE (requer pdfkit)
+const pdf = await nfe.danfe(xmlAutorizado);
+writeFileSync('danfe.pdf', pdf);
+```
+
+Providers customizados podem ser injetados na configuracao:
+
+```typescript
+const nfe = NFeCore.create({
+  pfx: readFileSync('./certificado.pfx'),
+  senha: 'senha',
+  ambiente: 'producao',
+  uf: 'MT',
+  xmlBuilder: meuXmlBuilder,    // opcional
+  xmlSigner: meuXmlSigner,      // opcional
+  transport: meuTransport        // opcional
+});
+```
+
+---
+
+## Uso avancado: providers e use cases individuais
+
+Para controle total sobre cada etapa, use os providers e use cases diretamente.
+
+### Setup comum
 
 Todos os exemplos abaixo usam estes imports e configuracao:
 

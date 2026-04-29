@@ -1,0 +1,150 @@
+# Roadmap — @brasil-fiscal/nfe
+
+Este documento descreve as fases de desenvolvimento do projeto. Cada fase tem um escopo bem definido e criterios de conclusao.
+
+---
+
+## Fase 0: Fundacao (atual)
+
+**Status:** Em progresso
+
+**Objetivo:** Estrutura do projeto, documentacao base e contratos (interfaces).
+
+- [x] Estrutura de diretorios
+- [x] Configuracao TypeScript, ESLint, Prettier
+- [x] package.json com metadados do projeto
+- [x] README.md com visao geral e quick start
+- [x] PROJECT.md com contexto e principios
+- [x] ROADMAP.md (este arquivo)
+- [x] ARCHITECTURE.md com decisoes tecnicas
+- [x] CONTRIBUTING.md com guidelines
+- [x] CLAUDE.md para AI agents
+- [x] GLOSSARY.md com termos fiscais
+- [ ] Contratos (interfaces) de todos os providers
+- [ ] Tipos base das entidades (NFe, Emitente, Destinatario, Produto)
+- [ ] Schemas Zod para validacao de entrada
+- [ ] Classe de erros customizados
+
+**Criterio de conclusao:** Todos os contratos definidos, tipos compilando, testes basicos passando.
+
+---
+
+## Fase 1: Geracao de XML
+
+**Status:** Pendente
+
+**Objetivo:** Gerar XML valido de NFe a partir das entidades. Foco inicial na SEFAZ MT (Mato Grosso).
+
+- [ ] Entidades completas (NFe, Emitente, Destinatario, Produto, ICMS, PIS, COFINS, Transporte, Pagamento)
+- [ ] `DefaultXmlBuilder` que converte entidades em XML no layout SEFAZ (versao 4.00)
+- [ ] Helpers: geracao de chave de acesso (44 digitos), digito verificador (mod11)
+- [ ] Constantes: codigos IBGE (UF + municipio — priorizando MT), tabela CFOP, tabela CST
+- [ ] Validacao de CNPJ e CPF
+- [ ] Testes unitarios cobrindo geracao de XML
+
+**Criterio de conclusao:** XML gerado passa na validacao contra XSD oficial da SEFAZ.
+
+---
+
+## Fase 2: Assinatura Digital
+
+**Status:** Pendente
+
+**Objetivo:** Assinar o XML da NFe com certificado digital A1.
+
+- [ ] `A1CertificateProvider` para carregar .pfx/.p12
+- [ ] `DefaultXmlSigner` com XMLDSig (RSA-SHA1) via `node:crypto`
+- [ ] Canonicalizacao C14N do XML antes da assinatura
+- [ ] Testes com certificados de teste
+
+**Criterio de conclusao:** XML assinado eh valido e verificavel.
+
+---
+
+## Fase 3: Validacao XSD
+
+**Status:** Pendente
+
+**Objetivo:** Validar XML contra schemas XSD oficiais da SEFAZ.
+
+- [ ] `XsdSchemaValidator` que valida XML gerado
+- [ ] Schemas XSD da NFe 4.00 incluidos ou referenciados
+- [ ] Erros descritivos indicando exatamente qual campo falhou
+
+**Criterio de conclusao:** XMLs invalidos sao rejeitados com mensagens claras.
+
+---
+
+## Fase 4: Transmissao para SEFAZ
+
+**Status:** Pendente
+
+**Objetivo:** Enviar NFe assinada para a SEFAZ e processar a resposta.
+
+- [ ] `NodeHttpSefazTransport` com `node:https` e mTLS
+- [ ] URLs dos webservices da SEFAZ MT (homologacao e producao)
+- [ ] Mapeamento extensivel de URLs por UF e ambiente para suporte futuro a outros estados
+- [ ] Montagem do envelope SOAP para o webservice `NFeAutorizacao4`
+- [ ] Parse da resposta SOAP (protocolo, status, motivo)
+- [ ] `ConsultProtocolUseCase` para consulta via `NFeConsultaProtocolo4`
+- [ ] Tratamento de erros da SEFAZ (rejeicoes com codigo e motivo)
+
+**Criterio de conclusao:** NFe transmitida com sucesso em ambiente de homologacao da SEFAZ MT.
+
+---
+
+## Fase 5: Fachada e API Publica
+
+**Status:** Pendente
+
+**Objetivo:** Integrar tudo na classe `NFeCore` e estabilizar a API publica.
+
+- [ ] `NFeCore.create()` com configuracao de providers
+- [ ] API fluente: `nfe.xml.generate()`, `nfe.xml.sign()`, `nfe.sefaz.transmit()`, `nfe.sefaz.consult()`
+- [ ] Emissao de eventos (sucesso, erro, rejeicao) para observabilidade
+- [ ] `index.ts` com exports publicos bem definidos
+- [ ] Documentacao de exemplos completos
+- [ ] Testes de integracao end-to-end (homologacao)
+
+**Criterio de conclusao:** Um dev consegue instalar, configurar e emitir uma NFe em homologacao seguindo apenas o README.
+
+---
+
+## Futuro (apos v1)
+
+Funcionalidades planejadas para versoes futuras. Nao fazem parte do escopo atual.
+
+### Suporte a outros estados
+- Adicionar URLs de webservices para todos os estados (SP, RJ, MG, RS, etc.)
+- SVAN (Sefaz Virtual do Ambiente Nacional) para estados que nao tem SEFAZ propria
+- SVRS (Sefaz Virtual do Rio Grande do Sul)
+- Testes de homologacao por estado
+
+### Eventos NFe
+- Cancelamento de NFe
+- Carta de correcao (CC-e)
+- Inutilizacao de numeracao
+
+### Manifestacao do Destinatario
+- Consulta de NFe recebidas (distribuicao DFe)
+- Confirmacao da operacao
+- Ciencia da operacao
+- Desconhecimento da operacao
+- Operacao nao realizada
+
+### Outros documentos fiscais
+- `@brasil-fiscal/nfce` — NFCe (Nota Fiscal do Consumidor Eletronica)
+- `@brasil-fiscal/cte` — CTe (Conhecimento de Transporte Eletronico)
+- `@brasil-fiscal/mdfe` — MDFe (Manifesto Eletronico de Documentos Fiscais)
+
+### Certificado A3
+- Suporte a smartcard/token via PKCS#11
+
+### DANFE
+- `@brasil-fiscal/danfe` — Geracao de PDF do DANFE
+
+---
+
+## Como acompanhar
+
+Cada fase sera desenvolvida em uma branch dedicada com PR para `main`. Issues no GitHub vao rastrear tarefas individuais dentro de cada fase.

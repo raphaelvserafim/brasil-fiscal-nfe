@@ -1,0 +1,8 @@
+node_modules
+dist
+.env
+*.pfx
+*.p12
+*.pem
+.DS_Store
+coverage

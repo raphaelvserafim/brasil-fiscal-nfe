@@ -1,4 +1,4 @@
-# Contributing to brasil-fiscal-nfe
+# Contributing to @brasil-fiscal/nfe
 
 Obrigado por considerar contribuir! Este guia explica como participar do projeto.
 
@@ -6,7 +6,7 @@ Obrigado por considerar contribuir! Este guia explica como participar do projeto
 
 ### Reportando bugs
 
-1. Verifique se ja existe uma [issue](https://github.com/raphaelvserafim/brasil-fiscal-nfe/issues) aberta
+1. Verifique se ja existe uma [issue](https://github.com/brasil-fiscal/nfe/issues) aberta
 2. Crie uma nova issue com:
    - Descricao clara do problema
    - Passos para reproduzir

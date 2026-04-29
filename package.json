@@ -1,5 +1,5 @@
 {
-  "name": "brasil-fiscal-nfe",
+  "name": "@brasil-fiscal/nfe",
   "version": "0.1.0",
   "description": "Lib open-source para emissao de NFe (Nota Fiscal Eletronica) em TypeScript. Arquitetura limpa, zero dependencias, plugavel.",
   "main": "dist/index.js",
@@ -15,7 +15,9 @@
     "format": "prettier --write .",
     "test": "tsx --test tests/**/*.spec.ts",
     "prepublishOnly": "npm run build",
-    "publish:github": "npm pkg set name='@raphaelvserafim/brasil-fiscal-nfe' && npm publish --registry=https://npm.pkg.github.com && npm pkg set name='brasil-fiscal-nfe'"
+    "publish:npm": "npm publish --access public --registry=https://registry.npmjs.org",
+    "publish:github": "npm publish --registry=https://npm.pkg.github.com",
+    "publish:all": "npm run publish:npm && npm run publish:github"
   },
   "keywords": [
     "nfe",
@@ -33,12 +35,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/raphaelvserafim/brasil-fiscal-nfe.git"
+    "url": "https://github.com/brasil-fiscal/nfe.git"
   },
   "bugs": {
-    "url": "https://github.com/raphaelvserafim/brasil-fiscal-nfe/issues"
+    "url": "https://github.com/brasil-fiscal/nfe/issues"
   },
-  "homepage": "https://github.com/raphaelvserafim/brasil-fiscal-nfe#readme",
+  "homepage": "https://github.com/brasil-fiscal/nfe#readme",
   "engines": {
     "node": ">=18.0.0"
   },

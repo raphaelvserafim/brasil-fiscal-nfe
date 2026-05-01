@@ -25,7 +25,7 @@ export type NFeIdentificacao = {
 export type NFeProps = {
   readonly identificacao: NFeIdentificacao;
   readonly emitente: EmitenteProps;
-  readonly destinatario: DestinatarioProps;
+  readonly destinatario?: DestinatarioProps;
   readonly produtos: ProdutoProps[];
   readonly transporte: TransporteProps;
   readonly cobranca?: CobrancaProps;
@@ -37,7 +37,7 @@ export type NFeProps = {
 export class NFe {
   public readonly identificacao: NFeIdentificacao;
   public readonly emitente: EmitenteProps;
-  public readonly destinatario: DestinatarioProps;
+  public readonly destinatario?: DestinatarioProps;
   public readonly produtos: readonly ProdutoProps[];
   public readonly transporte: TransporteProps;
   public readonly cobranca?: CobrancaProps;

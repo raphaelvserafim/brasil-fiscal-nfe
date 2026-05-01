@@ -38,7 +38,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/brasil-fiscal/nfe.git"
+    "url": "git+https://github.com/brasil-fiscal/nfe.git"
   },
   "bugs": {
     "url": "https://github.com/brasil-fiscal/nfe/issues"

@@ -7,5 +7,5 @@ export type DestinatarioProps = {
   readonly email?: string;
   readonly inscricaoEstadual?: string;
   readonly indicadorIE: 1 | 2 | 9;
-  readonly endereco: EnderecoProps;
+  readonly endereco?: EnderecoProps;
 };

@@ -124,9 +124,11 @@ export class DefaultXmlBuilder implements XmlBuilder {
     );
   }
 
-  private buildDestinatario(dest: DestinatarioProps, tpAmb: 1 | 2): string {
-    const doc = dest.cnpj ? tag('CNPJ', dest.cnpj) : tag('CPF', dest.cpf);
-    const endereco = this.buildEndereco('enderDest', dest.endereco);
+  private buildDestinatario(dest: DestinatarioProps | undefined, tpAmb: 1 | 2): string {
+    if (!dest) return '';
+    const doc = dest.cnpj ? tag('CNPJ', dest.cnpj) : dest.cpf ? tag('CPF', dest.cpf) : '';
+    if (!doc) return '';
+    const endereco = dest.endereco ? this.buildEndereco('enderDest', dest.endereco) : '';
     const xNome = tpAmb === 2
       ? 'NF-E EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL'
       : dest.nome;

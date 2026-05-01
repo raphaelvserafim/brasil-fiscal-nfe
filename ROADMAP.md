@@ -188,6 +188,25 @@ Este documento descreve as fases de desenvolvimento do projeto. Cada fase tem um
 
 ---
 
+## Fase 9: NFC-e (Nota Fiscal de Consumidor Eletronica)
+
+**Status:** Pendente
+
+**Objetivo:** Suporte a NFC-e (modelo 65) no mesmo projeto, reutilizando toda a infraestrutura existente de XML, assinatura, mTLS e transmissao.
+
+- [ ] Modelo configuravel (`'55' | '65'`) em `NFeIdentificacao` — remover hardcode `'55'` do `DefaultXmlBuilder`
+- [ ] URLs dos webservices NFC-e por autorizador (endpoints separados dos da NF-e)
+- [ ] Geracao do QR Code da NFC-e (URL com hash SHA1 dos dados da nota)
+- [ ] Campos `qrCode` e `urlChave` no bloco `infNFeSupl` do XML
+- [ ] Regras especificas NFC-e: `dest` opcional (consumidor nao identificado), `tpImp=4`, `indPres` obrigatorio
+- [ ] Gerador de cupom termico 80mm (`CupomNFCeGenerator`) com QR Code, sem canhoto
+- [ ] `GerarCupomUseCase` — aceita XML autorizado, retorna Buffer PDF (80mm)
+- [ ] Testes unitarios e validacao XSD para modelo 65
+
+**Criterio de conclusao:** NFC-e transmitida em homologacao e cupom termico PDF gerado corretamente.
+
+---
+
 ## Futuro (apos v1)
 
 Funcionalidades planejadas para versoes futuras. Nao fazem parte do escopo atual.
@@ -200,7 +219,6 @@ Funcionalidades planejadas para versoes futuras. Nao fazem parte do escopo atual
 - Testes de homologacao por estado
 
 ### Outros documentos fiscais
-- `@brasil-fiscal/nfce` — NFCe (Nota Fiscal do Consumidor Eletronica)
 - `@brasil-fiscal/cte` — CTe (Conhecimento de Transporte Eletronico)
 - `@brasil-fiscal/mdfe` — MDFe (Manifesto Eletronico de Documentos Fiscais)
 

@@ -188,22 +188,36 @@ Este documento descreve as fases de desenvolvimento do projeto. Cada fase tem um
 
 ---
 
-## Fase 9: NFC-e (Nota Fiscal de Consumidor Eletronica)
+## Fase 9a: NFC-e — XML e Transmissao
+
+**Status:** Concluida
+
+**Objetivo:** Suporte a NFC-e (modelo 65) no mesmo projeto, reutilizando infraestrutura existente.
+
+- [x] Modelo configuravel (`'55' | '65'`) em `NFeIdentificacao`
+- [x] URLs dos webservices NFC-e por autorizador (MT inicial)
+- [x] Geracao da URL do QR Code v2 da NFC-e
+- [x] Campos `qrCode` e `urlChave` no bloco `infNFeSupl` do XML
+- [x] Regras especificas NFC-e: `dest` opcional, roteamento por modelo
+- [x] `cIdToken` e `csc` no NFeCoreConfig
+- [x] Testes unitarios para modelo 65
+
+**Criterio de conclusao:** NFC-e transmitida em homologacao com QR Code URL gerado.
+
+---
+
+## Fase 9b: NFC-e — Cupom Termico
 
 **Status:** Pendente
 
-**Objetivo:** Suporte a NFC-e (modelo 65) no mesmo projeto, reutilizando toda a infraestrutura existente de XML, assinatura, mTLS e transmissao.
+**Objetivo:** Gerar cupom termico 80mm (PDF) com QR Code a partir de NFC-e autorizada.
 
-- [ ] Modelo configuravel (`'55' | '65'`) em `NFeIdentificacao` — remover hardcode `'55'` do `DefaultXmlBuilder`
-- [ ] URLs dos webservices NFC-e por autorizador (endpoints separados dos da NF-e)
-- [ ] Geracao do QR Code da NFC-e (URL com hash SHA1 dos dados da nota)
-- [ ] Campos `qrCode` e `urlChave` no bloco `infNFeSupl` do XML
-- [ ] Regras especificas NFC-e: `dest` opcional (consumidor nao identificado), `tpImp=4`, `indPres` obrigatorio
-- [ ] Gerador de cupom termico 80mm (`CupomNFCeGenerator`) com QR Code, sem canhoto
+- [ ] Gerador de cupom termico 80mm (`CupomNFCeGenerator`) com QR Code
 - [ ] `GerarCupomUseCase` — aceita XML autorizado, retorna Buffer PDF (80mm)
-- [ ] Testes unitarios e validacao XSD para modelo 65
+- [ ] peerDependency `qrcode` para geracao de imagem QR Code
+- [ ] Testes unitarios
 
-**Criterio de conclusao:** NFC-e transmitida em homologacao e cupom termico PDF gerado corretamente.
+**Criterio de conclusao:** Cupom termico PDF gerado corretamente a partir de XML autorizado de NFC-e.
 
 ---
 

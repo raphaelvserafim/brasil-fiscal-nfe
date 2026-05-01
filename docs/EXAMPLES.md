@@ -83,6 +83,192 @@ const nfe = NFeCore.create({
 
 ---
 
+## NFC-e (Nota Fiscal de Consumidor Eletronica)
+
+A mesma `NFeCore` emite NFe (modelo 55) e NFC-e (modelo 65). O modelo eh definido por nota, nao por instancia.
+
+### Configuracao
+
+Para NFC-e, voce precisa do `cIdToken` e `csc` (Codigo de Seguranca do Contribuinte), fornecidos pela SEFAZ do seu estado:
+
+```typescript
+import { NFeCore } from '@brasil-fiscal/nfe';
+import { readFileSync } from 'node:fs';
+
+const core = NFeCore.create({
+  pfx: readFileSync('./certificado.pfx'),
+  senha: 'senha-do-certificado',
+  ambiente: 'homologacao',
+  uf: 'MT',
+  cIdToken: '000001',    // obrigatorio para NFC-e
+  csc: 'SEU-CSC-AQUI'    // obrigatorio para NFC-e
+});
+```
+
+### Emitir NFC-e (consumidor identificado)
+
+```typescript
+const result = await core.transmitir({
+  identificacao: {
+    naturezaOperacao: 'Venda de mercadoria',
+    tipoOperacao: 1,
+    destinoOperacao: 1,
+    finalidade: 1,
+    consumidorFinal: 1,
+    presencaComprador: 1,  // 1 = presencial
+    uf: 'MT',
+    municipio: '5103403',
+    serie: 1,
+    numero: 1,
+    modelo: '65',          // NFC-e
+    tipoImpressao: 4       // 4 = DANFE NFC-e
+  },
+  emitente: {
+    cnpj: '12345678000195',
+    razaoSocial: 'Loja Teste Ltda',
+    nomeFantasia: 'Loja Teste',
+    inscricaoEstadual: '131234567',
+    regimeTributario: 1,
+    endereco: {
+      logradouro: 'Rua das Flores',
+      numero: '100',
+      bairro: 'Centro',
+      codigoMunicipio: '5103403',
+      municipio: 'Cuiaba',
+      uf: 'MT',
+      cep: '78005000'
+    }
+  },
+  destinatario: {
+    cpf: '52998224725',
+    nome: 'Maria da Silva',
+    indicadorIE: 9
+    // endereco eh opcional na NFC-e
+  },
+  produtos: [
+    {
+      numero: 1,
+      codigo: '001',
+      descricao: 'Camiseta Algodao P',
+      ncm: '61091000',
+      cfop: '5102',
+      unidade: 'UN',
+      quantidade: 2,
+      valorUnitario: 49.90,
+      valorTotal: 99.80,
+      icms: { origem: 0, csosn: '102' },
+      pis: { cst: '49' },
+      cofins: { cst: '49' }
+    }
+  ],
+  transporte: { modalidadeFrete: 9 },
+  pagamento: {
+    pagamentos: [{ formaPagamento: '01', valor: 99.80 }]
+  }
+});
+
+console.log(result.autorizada);      // true
+console.log(result.chaveAcesso);     // 44 digitos (modelo 65 na posicao 20-21)
+console.log(result.xmlProtocolado);  // XML com <infNFeSupl> contendo qrCode e urlChave
+```
+
+### Emitir NFC-e (consumidor NAO identificado)
+
+Para vendas de baixo valor, o destinatario pode ser omitido:
+
+```typescript
+const result = await core.transmitir({
+  identificacao: {
+    naturezaOperacao: 'Venda de mercadoria',
+    tipoOperacao: 1,
+    destinoOperacao: 1,
+    finalidade: 1,
+    consumidorFinal: 1,
+    presencaComprador: 1,
+    uf: 'MT',
+    municipio: '5103403',
+    serie: 1,
+    numero: 2,
+    modelo: '65',
+    tipoImpressao: 4
+  },
+  emitente: {
+    cnpj: '12345678000195',
+    razaoSocial: 'Loja Teste Ltda',
+    nomeFantasia: 'Loja Teste',
+    inscricaoEstadual: '131234567',
+    regimeTributario: 1,
+    endereco: {
+      logradouro: 'Rua das Flores',
+      numero: '100',
+      bairro: 'Centro',
+      codigoMunicipio: '5103403',
+      municipio: 'Cuiaba',
+      uf: 'MT',
+      cep: '78005000'
+    }
+  },
+  // sem destinatario — consumidor nao identificado
+  produtos: [
+    {
+      numero: 1,
+      codigo: '002',
+      descricao: 'Refrigerante 350ml',
+      ncm: '22021000',
+      cfop: '5102',
+      unidade: 'UN',
+      quantidade: 1,
+      valorUnitario: 5.50,
+      valorTotal: 5.50,
+      icms: { origem: 0, csosn: '102' },
+      pis: { cst: '49' },
+      cofins: { cst: '49' }
+    }
+  ],
+  transporte: { modalidadeFrete: 9 },
+  pagamento: {
+    pagamentos: [{ formaPagamento: '01', valor: 5.50 }]
+  }
+});
+```
+
+### Diferenças NFe vs NFC-e
+
+| | NFe (modelo 55) | NFC-e (modelo 65) |
+|---|---|---|
+| `modelo` | `'55'` (default) | `'65'` |
+| `tipoImpressao` | `1` (retrato A4) | `4` (DANFE NFC-e) |
+| `destinatario` | obrigatorio | opcional |
+| `cIdToken`/`csc` | nao precisa | obrigatorio no config |
+| QR Code | nao tem | `<infNFeSupl>` com URL do QR Code |
+| Impressao | DANFE A4 | Cupom termico 80mm (Fase 9b) |
+
+### Usar QR Code manualmente
+
+Se voce precisa gerar a URL do QR Code por conta propria:
+
+```typescript
+import { buildNFCeQRCodeUrl, getNFCeQRCodeUrl, getNFCeConsultaUrl } from '@brasil-fiscal/nfe';
+
+const qrCodeUrl = buildNFCeQRCodeUrl({
+  urlQRCode: getNFCeQRCodeUrl('MT', 'homologacao'),
+  chNFe: '51260412345678000195650010000000021234567890',
+  tpAmb: '2',
+  cDest: '52998224725',       // CPF do consumidor (vazio se nao identificado)
+  dhEmi: '2026-04-28T10:00:00-03:00',
+  vNF: '99.80',
+  vICMS: '0.00',
+  digVal: 'base64DigestValue',
+  cIdToken: '000001',
+  csc: 'SEU-CSC-AQUI'
+});
+
+console.log(qrCodeUrl);
+// https://homologacao.sefaz.mt.gov.br/nfce/consultanfce?p=5126041234...
+```
+
+---
+
 ## Uso avancado: providers e use cases individuais
 
 Para controle total sobre cada etapa, use os providers e use cases diretamente.

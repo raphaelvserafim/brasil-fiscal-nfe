@@ -235,6 +235,7 @@ Funcionalidades planejadas para versoes futuras. Nao fazem parte do escopo atual
 ### Outros documentos fiscais
 - `@brasil-fiscal/cte` — CTe (Conhecimento de Transporte Eletronico)
 - `@brasil-fiscal/mdfe` — MDFe (Manifesto Eletronico de Documentos Fiscais)
+- `@brasil-fiscal/nfse` — NFSe (Nota Fiscal de Servico Eletronica) — Padrao Nacional (ADN), API REST
 
 ### Transparencia Fiscal (Lei 12.741/2012)
 - Helper `calcularTributosAproximados(produtos, tabelaIBPT)` que calcula valor aproximado dos tributos por NCM

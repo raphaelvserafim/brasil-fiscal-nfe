@@ -208,14 +208,14 @@ Este documento descreve as fases de desenvolvimento do projeto. Cada fase tem um
 
 ## Fase 9b: NFC-e — Cupom Termico
 
-**Status:** Pendente
+**Status:** Concluida
 
 **Objetivo:** Gerar cupom termico 80mm (PDF) com QR Code a partir de NFC-e autorizada.
 
-- [ ] Gerador de cupom termico 80mm (`CupomNFCeGenerator`) com QR Code
-- [ ] `GerarCupomUseCase` — aceita XML autorizado, retorna Buffer PDF (80mm)
-- [ ] peerDependency `qrcode` para geracao de imagem QR Code
-- [ ] Testes unitarios
+- [x] Gerador de cupom termico 80mm (`CupomNFCeGenerator`) com QR Code
+- [x] `GerarCupomUseCase` — aceita XML autorizado, retorna Buffer PDF (80mm)
+- [x] peerDependency `qrcode` para geracao de imagem QR Code
+- [x] Testes unitarios
 
 **Criterio de conclusao:** Cupom termico PDF gerado corretamente a partir de XML autorizado de NFC-e.
 

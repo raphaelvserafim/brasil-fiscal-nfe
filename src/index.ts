@@ -68,6 +68,12 @@ export type { SefazService, SefazEnvironment, Autorizador } from './shared/const
 export { getAnUrl } from './shared/constants/sefaz-an-urls';
 export type { AnService, AnEnvironment } from './shared/constants/sefaz-an-urls';
 
+// NFC-e
+export { buildNFCeQRCodeUrl, buildInfNFeSupl } from './shared/helpers/nfce-qrcode';
+export type { NFCeQRCodeParams } from './shared/helpers/nfce-qrcode';
+export { getNFCeQRCodeUrl, getNFCeConsultaUrl } from './shared/constants/nfce-urls';
+export type { NFCeEnvironment } from './shared/constants/nfce-urls';
+
 // Errors
 export { NFeError } from './shared/errors/NFeError';
 export {

@@ -20,6 +20,7 @@ export type NFeIdentificacao = {
   readonly tipoEmissao?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 9;
   readonly tipoImpressao?: 0 | 1 | 2 | 3 | 4 | 5;
   readonly ambiente?: 1 | 2;
+  readonly modelo?: '55' | '65';
 };
 
 export type NFeProps = {

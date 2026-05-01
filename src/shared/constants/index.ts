@@ -15,3 +15,5 @@ export {
 export type { SefazService, SefazEnvironment, Autorizador } from './sefaz-urls';
 export { getAnUrl } from './sefaz-an-urls';
 export type { AnService, AnEnvironment } from './sefaz-an-urls';
+export { getNFCeQRCodeUrl, getNFCeConsultaUrl } from './nfce-urls';
+export type { NFCeEnvironment } from './nfce-urls';

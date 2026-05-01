@@ -42,13 +42,14 @@ export const nfeIdentificacaoSchema = z.object({
     .or(z.literal(3))
     .or(z.literal(4))
     .or(z.literal(5))
-    .optional()
+    .optional(),
+  modelo: z.literal('55').or(z.literal('65')).optional()
 });
 
 export const nfeSchema = z.object({
   identificacao: nfeIdentificacaoSchema,
   emitente: emitenteSchema,
-  destinatario: destinatarioSchema,
+  destinatario: destinatarioSchema.optional(),
   produtos: z.array(produtoSchema).min(1),
   transporte: transporteSchema,
   cobranca: cobrancaSchema.optional(),

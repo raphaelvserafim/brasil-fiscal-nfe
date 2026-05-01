@@ -15,7 +15,7 @@ const fakeCert: CertificateData = {
   certPem: 'fake-cert'
 };
 
-const fakeNFe = {} as NFeProps;
+const fakeNFe = { identificacao: { modelo: '55' } } as unknown as NFeProps;
 
 function buildAutorizacaoResponse(cStat: string, xMotivo: string, nProt?: string, chNFe?: string): string {
   const protNFe = [

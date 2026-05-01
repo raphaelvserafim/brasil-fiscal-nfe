@@ -21,7 +21,7 @@ export class DefaultXmlBuilder implements XmlBuilder {
     const dataEmissao = nfe.identificacao.dataEmissao ?? new Date();
     const tipoEmissao = nfe.identificacao.tipoEmissao ?? 1;
     const codigoNumerico = generateNumericCode();
-    const modelo = '55';
+    const modelo = nfe.identificacao.modelo ?? '55';
 
     const chaveAcesso = generateAccessKey({
       uf: cUF,

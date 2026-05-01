@@ -15,6 +15,7 @@ import { DistribuicaoDFeUseCase } from '@nfe/application/use-cases/DistribuicaoD
 import { ManifestacaoUseCase } from '@nfe/application/use-cases/ManifestacaoUseCase';
 import { GerarDanfeUseCase } from '@nfe/application/use-cases/GerarDanfeUseCase';
 import { NFeEnvironment, TransmitResult, ConsultResult } from '@nfe/core/types';
+import { NFeError } from '@nfe/shared/errors/NFeError';
 import { NFeProps } from '@nfe/domain/entities/NFe';
 import type { EventoResult } from '@nfe/application/use-cases/CancelaNFeUseCase';
 import type { InutilizacaoResult } from '@nfe/application/use-cases/InutilizaNFeUseCase';
@@ -32,6 +33,8 @@ export type NFeCoreConfig = {
   readonly xmlSigner?: XmlSigner;
   readonly transport?: SefazTransport;
   readonly certificate?: CertificateProvider;
+  readonly cIdToken?: string;
+  readonly csc?: string;
 };
 
 export type CancelaInput = {
@@ -82,6 +85,8 @@ export class NFeCore {
   private readonly transport: SefazTransport;
   private readonly environment: NFeEnvironment;
   private readonly uf: string;
+  private readonly cIdToken?: string;
+  private readonly csc?: string;
   readonly manifestar: Manifestar;
 
   private constructor(config: NFeCoreConfig) {
@@ -91,6 +96,8 @@ export class NFeCore {
     this.transport = config.transport ?? new NodeHttpSefazTransport();
     this.environment = toEnvironment(config.ambiente);
     this.uf = config.uf;
+    this.cIdToken = config.cIdToken;
+    this.csc = config.csc;
 
     const manifestacaoUseCase = new ManifestacaoUseCase({
       certificate: this.certificate,
@@ -117,6 +124,10 @@ export class NFeCore {
 
   async transmitir(nfe: NFeProps): Promise<TransmitResult> {
     const ambiente = (nfe.identificacao?.ambiente ?? (this.environment === 'production' ? 1 : 2)) as 1 | 2;
+    const modelo = nfe.identificacao.modelo ?? '55';
+    if (modelo === '65' && (!this.cIdToken || !this.csc)) {
+      throw new NFeError('cIdToken e csc sao obrigatorios para NFC-e (modelo 65)');
+    }
     const nfeComAmbiente: NFeProps = {
       ...nfe,
       identificacao: {
@@ -131,7 +142,9 @@ export class NFeCore {
       certificate: this.certificate,
       transport: this.transport,
       environment: this.environment,
-      uf: this.uf
+      uf: this.uf,
+      cIdToken: this.cIdToken,
+      csc: this.csc
     });
     return useCase.execute(nfeComAmbiente);
   }

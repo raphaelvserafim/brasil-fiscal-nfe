@@ -6,7 +6,9 @@ export type SefazService =
   | 'NFeConsultaProtocolo'
   | 'NFeStatusServico'
   | 'RecepcaoEvento'
-  | 'NFeInutilizacao';
+  | 'NFeInutilizacao'
+  | 'NFCeAutorizacao'
+  | 'NFCeConsultaProtocolo';
 
 export type SefazEnvironment = 'homologacao' | 'producao';
 
@@ -69,7 +71,9 @@ export const AUTORIZADOR_URLS: Record<Autorizador, AutorizadorUrls> = {
       NFeConsultaProtocolo: 'https://homnfe.sefaz.am.gov.br/services2/services/NfeConsulta4',
       NFeStatusServico: 'https://homnfe.sefaz.am.gov.br/services2/services/NfeStatusServico4',
       RecepcaoEvento: 'https://homnfe.sefaz.am.gov.br/services2/services/RecepcaoEvento4',
-      NFeInutilizacao: 'https://homnfe.sefaz.am.gov.br/services2/services/NfeInutilizacao4'
+      NFeInutilizacao: 'https://homnfe.sefaz.am.gov.br/services2/services/NfeInutilizacao4',
+      NFCeAutorizacao: '',
+      NFCeConsultaProtocolo: ''
     },
     producao: {
       NFeAutorizacao: 'https://nfe.sefaz.am.gov.br/services2/services/NfeAutorizacao4',
@@ -77,7 +81,9 @@ export const AUTORIZADOR_URLS: Record<Autorizador, AutorizadorUrls> = {
       NFeConsultaProtocolo: 'https://nfe.sefaz.am.gov.br/services2/services/NfeConsulta4',
       NFeStatusServico: 'https://nfe.sefaz.am.gov.br/services2/services/NfeStatusServico4',
       RecepcaoEvento: 'https://nfe.sefaz.am.gov.br/services2/services/RecepcaoEvento4',
-      NFeInutilizacao: 'https://nfe.sefaz.am.gov.br/services2/services/NfeInutilizacao4'
+      NFeInutilizacao: 'https://nfe.sefaz.am.gov.br/services2/services/NfeInutilizacao4',
+      NFCeAutorizacao: '',
+      NFCeConsultaProtocolo: ''
     }
   },
   BA: {
@@ -87,7 +93,9 @@ export const AUTORIZADOR_URLS: Record<Autorizador, AutorizadorUrls> = {
       NFeConsultaProtocolo: 'https://hnfe.sefaz.ba.gov.br/webservices/NFeConsultaProtocolo4/NFeConsultaProtocolo4.asmx',
       NFeStatusServico: 'https://hnfe.sefaz.ba.gov.br/webservices/NFeStatusServico4/NFeStatusServico4.asmx',
       RecepcaoEvento: 'https://hnfe.sefaz.ba.gov.br/webservices/NFeRecepcaoEvento4/NFeRecepcaoEvento4.asmx',
-      NFeInutilizacao: 'https://hnfe.sefaz.ba.gov.br/webservices/NFeInutilizacao4/NFeInutilizacao4.asmx'
+      NFeInutilizacao: 'https://hnfe.sefaz.ba.gov.br/webservices/NFeInutilizacao4/NFeInutilizacao4.asmx',
+      NFCeAutorizacao: '',
+      NFCeConsultaProtocolo: ''
     },
     producao: {
       NFeAutorizacao: 'https://nfe.sefaz.ba.gov.br/webservices/NFeAutorizacao4/NFeAutorizacao4.asmx',
@@ -95,7 +103,9 @@ export const AUTORIZADOR_URLS: Record<Autorizador, AutorizadorUrls> = {
       NFeConsultaProtocolo: 'https://nfe.sefaz.ba.gov.br/webservices/NFeConsultaProtocolo4/NFeConsultaProtocolo4.asmx',
       NFeStatusServico: 'https://nfe.sefaz.ba.gov.br/webservices/NFeStatusServico4/NFeStatusServico4.asmx',
       RecepcaoEvento: 'https://nfe.sefaz.ba.gov.br/webservices/NFeRecepcaoEvento4/NFeRecepcaoEvento4.asmx',
-      NFeInutilizacao: 'https://nfe.sefaz.ba.gov.br/webservices/NFeInutilizacao4/NFeInutilizacao4.asmx'
+      NFeInutilizacao: 'https://nfe.sefaz.ba.gov.br/webservices/NFeInutilizacao4/NFeInutilizacao4.asmx',
+      NFCeAutorizacao: '',
+      NFCeConsultaProtocolo: ''
     }
   },
   GO: {
@@ -105,7 +115,9 @@ export const AUTORIZADOR_URLS: Record<Autorizador, AutorizadorUrls> = {
       NFeConsultaProtocolo: 'https://homolog.sefaz.go.gov.br/nfe/services/NFeConsultaProtocolo4',
       NFeStatusServico: 'https://homolog.sefaz.go.gov.br/nfe/services/NFeStatusServico4',
       RecepcaoEvento: 'https://homolog.sefaz.go.gov.br/nfe/services/NFeRecepcaoEvento4',
-      NFeInutilizacao: 'https://homolog.sefaz.go.gov.br/nfe/services/NFeInutilizacao4'
+      NFeInutilizacao: 'https://homolog.sefaz.go.gov.br/nfe/services/NFeInutilizacao4',
+      NFCeAutorizacao: '',
+      NFCeConsultaProtocolo: ''
     },
     producao: {
       NFeAutorizacao: 'https://nfe.sefaz.go.gov.br/nfe/services/NFeAutorizacao4',
@@ -113,7 +125,9 @@ export const AUTORIZADOR_URLS: Record<Autorizador, AutorizadorUrls> = {
       NFeConsultaProtocolo: 'https://nfe.sefaz.go.gov.br/nfe/services/NFeConsultaProtocolo4',
       NFeStatusServico: 'https://nfe.sefaz.go.gov.br/nfe/services/NFeStatusServico4',
       RecepcaoEvento: 'https://nfe.sefaz.go.gov.br/nfe/services/NFeRecepcaoEvento4',
-      NFeInutilizacao: 'https://nfe.sefaz.go.gov.br/nfe/services/NFeInutilizacao4'
+      NFeInutilizacao: 'https://nfe.sefaz.go.gov.br/nfe/services/NFeInutilizacao4',
+      NFCeAutorizacao: '',
+      NFCeConsultaProtocolo: ''
     }
   },
   MG: {
@@ -123,7 +137,9 @@ export const AUTORIZADOR_URLS: Record<Autorizador, AutorizadorUrls> = {
       NFeConsultaProtocolo: 'https://hnfe.fazenda.mg.gov.br/nfe2/services/NFeConsultaProtocolo4',
       NFeStatusServico: 'https://hnfe.fazenda.mg.gov.br/nfe2/services/NFeStatusServico4',
       RecepcaoEvento: 'https://hnfe.fazenda.mg.gov.br/nfe2/services/NFeRecepcaoEvento4',
-      NFeInutilizacao: 'https://hnfe.fazenda.mg.gov.br/nfe2/services/NFeInutilizacao4'
+      NFeInutilizacao: 'https://hnfe.fazenda.mg.gov.br/nfe2/services/NFeInutilizacao4',
+      NFCeAutorizacao: '',
+      NFCeConsultaProtocolo: ''
     },
     producao: {
       NFeAutorizacao: 'https://nfe.fazenda.mg.gov.br/nfe2/services/NFeAutorizacao4',
@@ -131,7 +147,9 @@ export const AUTORIZADOR_URLS: Record<Autorizador, AutorizadorUrls> = {
       NFeConsultaProtocolo: 'https://nfe.fazenda.mg.gov.br/nfe2/services/NFeConsultaProtocolo4',
       NFeStatusServico: 'https://nfe.fazenda.mg.gov.br/nfe2/services/NFeStatusServico4',
       RecepcaoEvento: 'https://nfe.fazenda.mg.gov.br/nfe2/services/NFeRecepcaoEvento4',
-      NFeInutilizacao: 'https://nfe.fazenda.mg.gov.br/nfe2/services/NFeInutilizacao4'
+      NFeInutilizacao: 'https://nfe.fazenda.mg.gov.br/nfe2/services/NFeInutilizacao4',
+      NFCeAutorizacao: '',
+      NFCeConsultaProtocolo: ''
     }
   },
   MS: {
@@ -141,7 +159,9 @@ export const AUTORIZADOR_URLS: Record<Autorizador, AutorizadorUrls> = {
       NFeConsultaProtocolo: 'https://hom.nfe.sefaz.ms.gov.br/ws/NFeConsultaProtocolo4',
       NFeStatusServico: 'https://hom.nfe.sefaz.ms.gov.br/ws/NFeStatusServico4',
       RecepcaoEvento: 'https://hom.nfe.sefaz.ms.gov.br/ws/NFeRecepcaoEvento4',
-      NFeInutilizacao: 'https://hom.nfe.sefaz.ms.gov.br/ws/NFeInutilizacao4'
+      NFeInutilizacao: 'https://hom.nfe.sefaz.ms.gov.br/ws/NFeInutilizacao4',
+      NFCeAutorizacao: '',
+      NFCeConsultaProtocolo: ''
     },
     producao: {
       NFeAutorizacao: 'https://nfe.sefaz.ms.gov.br/ws/NFeAutorizacao4',
@@ -149,7 +169,9 @@ export const AUTORIZADOR_URLS: Record<Autorizador, AutorizadorUrls> = {
       NFeConsultaProtocolo: 'https://nfe.sefaz.ms.gov.br/ws/NFeConsultaProtocolo4',
       NFeStatusServico: 'https://nfe.sefaz.ms.gov.br/ws/NFeStatusServico4',
       RecepcaoEvento: 'https://nfe.sefaz.ms.gov.br/ws/NFeRecepcaoEvento4',
-      NFeInutilizacao: 'https://nfe.sefaz.ms.gov.br/ws/NFeInutilizacao4'
+      NFeInutilizacao: 'https://nfe.sefaz.ms.gov.br/ws/NFeInutilizacao4',
+      NFCeAutorizacao: '',
+      NFCeConsultaProtocolo: ''
     }
   },
   MT: {
@@ -159,7 +181,9 @@ export const AUTORIZADOR_URLS: Record<Autorizador, AutorizadorUrls> = {
       NFeConsultaProtocolo: 'https://homologacao.sefaz.mt.gov.br/nfews/v2/services/NfeConsulta4',
       NFeStatusServico: 'https://homologacao.sefaz.mt.gov.br/nfews/v2/services/NfeStatusServico4',
       RecepcaoEvento: 'https://homologacao.sefaz.mt.gov.br/nfews/v2/services/RecepcaoEvento4',
-      NFeInutilizacao: 'https://homologacao.sefaz.mt.gov.br/nfews/v2/services/NfeInutilizacao4'
+      NFeInutilizacao: 'https://homologacao.sefaz.mt.gov.br/nfews/v2/services/NfeInutilizacao4',
+      NFCeAutorizacao: 'https://homologacao.sefaz.mt.gov.br/nfcews/services/NfeAutorizacao4',
+      NFCeConsultaProtocolo: 'https://homologacao.sefaz.mt.gov.br/nfcews/services/NfeConsulta4'
     },
     producao: {
       NFeAutorizacao: 'https://nfe.sefaz.mt.gov.br/nfews/v2/services/NfeAutorizacao4',
@@ -167,7 +191,9 @@ export const AUTORIZADOR_URLS: Record<Autorizador, AutorizadorUrls> = {
       NFeConsultaProtocolo: 'https://nfe.sefaz.mt.gov.br/nfews/v2/services/NfeConsulta4',
       NFeStatusServico: 'https://nfe.sefaz.mt.gov.br/nfews/v2/services/NfeStatusServico4',
       RecepcaoEvento: 'https://nfe.sefaz.mt.gov.br/nfews/v2/services/RecepcaoEvento4',
-      NFeInutilizacao: 'https://nfe.sefaz.mt.gov.br/nfews/v2/services/NfeInutilizacao4'
+      NFeInutilizacao: 'https://nfe.sefaz.mt.gov.br/nfews/v2/services/NfeInutilizacao4',
+      NFCeAutorizacao: 'https://nfce.sefaz.mt.gov.br/nfcews/services/NfeAutorizacao4',
+      NFCeConsultaProtocolo: 'https://nfce.sefaz.mt.gov.br/nfcews/services/NfeConsulta4'
     }
   },
   PE: {
@@ -177,7 +203,9 @@ export const AUTORIZADOR_URLS: Record<Autorizador, AutorizadorUrls> = {
       NFeConsultaProtocolo: 'https://nfehomolog.sefaz.pe.gov.br/nfe-service/services/NFeConsultaProtocolo4',
       NFeStatusServico: 'https://nfehomolog.sefaz.pe.gov.br/nfe-service/services/NFeStatusServico4',
       RecepcaoEvento: 'https://nfehomolog.sefaz.pe.gov.br/nfe-service/services/NFeRecepcaoEvento4',
-      NFeInutilizacao: 'https://nfehomolog.sefaz.pe.gov.br/nfe-service/services/NFeInutilizacao4'
+      NFeInutilizacao: 'https://nfehomolog.sefaz.pe.gov.br/nfe-service/services/NFeInutilizacao4',
+      NFCeAutorizacao: '',
+      NFCeConsultaProtocolo: ''
     },
     producao: {
       NFeAutorizacao: 'https://nfe.sefaz.pe.gov.br/nfe-service/services/NFeAutorizacao4',
@@ -185,7 +213,9 @@ export const AUTORIZADOR_URLS: Record<Autorizador, AutorizadorUrls> = {
       NFeConsultaProtocolo: 'https://nfe.sefaz.pe.gov.br/nfe-service/services/NFeConsultaProtocolo4',
       NFeStatusServico: 'https://nfe.sefaz.pe.gov.br/nfe-service/services/NFeStatusServico4',
       RecepcaoEvento: 'https://nfe.sefaz.pe.gov.br/nfe-service/services/NFeRecepcaoEvento4',
-      NFeInutilizacao: 'https://nfe.sefaz.pe.gov.br/nfe-service/services/NFeInutilizacao4'
+      NFeInutilizacao: 'https://nfe.sefaz.pe.gov.br/nfe-service/services/NFeInutilizacao4',
+      NFCeAutorizacao: '',
+      NFCeConsultaProtocolo: ''
     }
   },
   PR: {
@@ -195,7 +225,9 @@ export const AUTORIZADOR_URLS: Record<Autorizador, AutorizadorUrls> = {
       NFeConsultaProtocolo: 'https://homologacao.nfe.sefa.pr.gov.br/nfe/NFeConsultaProtocolo4',
       NFeStatusServico: 'https://homologacao.nfe.sefa.pr.gov.br/nfe/NFeStatusServico4',
       RecepcaoEvento: 'https://homologacao.nfe.sefa.pr.gov.br/nfe/NFeRecepcaoEvento4',
-      NFeInutilizacao: 'https://homologacao.nfe.sefa.pr.gov.br/nfe/NFeInutilizacao4'
+      NFeInutilizacao: 'https://homologacao.nfe.sefa.pr.gov.br/nfe/NFeInutilizacao4',
+      NFCeAutorizacao: '',
+      NFCeConsultaProtocolo: ''
     },
     producao: {
       NFeAutorizacao: 'https://nfe.sefa.pr.gov.br/nfe/NFeAutorizacao4',
@@ -203,7 +235,9 @@ export const AUTORIZADOR_URLS: Record<Autorizador, AutorizadorUrls> = {
       NFeConsultaProtocolo: 'https://nfe.sefa.pr.gov.br/nfe/NFeConsultaProtocolo4',
       NFeStatusServico: 'https://nfe.sefa.pr.gov.br/nfe/NFeStatusServico4',
       RecepcaoEvento: 'https://nfe.sefa.pr.gov.br/nfe/NFeRecepcaoEvento4',
-      NFeInutilizacao: 'https://nfe.sefa.pr.gov.br/nfe/NFeInutilizacao4'
+      NFeInutilizacao: 'https://nfe.sefa.pr.gov.br/nfe/NFeInutilizacao4',
+      NFCeAutorizacao: '',
+      NFCeConsultaProtocolo: ''
     }
   },
   RS: {
@@ -213,7 +247,9 @@ export const AUTORIZADOR_URLS: Record<Autorizador, AutorizadorUrls> = {
       NFeConsultaProtocolo: 'https://nfe-homologacao.sefazrs.rs.gov.br/ws/NfeConsulta/NfeConsulta4.asmx',
       NFeStatusServico: 'https://nfe-homologacao.sefazrs.rs.gov.br/ws/NfeStatusServico/NfeStatusServico4.asmx',
       RecepcaoEvento: 'https://nfe-homologacao.sefazrs.rs.gov.br/ws/recepcaoevento/recepcaoevento4.asmx',
-      NFeInutilizacao: 'https://nfe-homologacao.sefazrs.rs.gov.br/ws/nfeinutilizacao/nfeinutilizacao4.asmx'
+      NFeInutilizacao: 'https://nfe-homologacao.sefazrs.rs.gov.br/ws/nfeinutilizacao/nfeinutilizacao4.asmx',
+      NFCeAutorizacao: '',
+      NFCeConsultaProtocolo: ''
     },
     producao: {
       NFeAutorizacao: 'https://nfe.sefazrs.rs.gov.br/ws/NfeAutorizacao/NFeAutorizacao4.asmx',
@@ -221,7 +257,9 @@ export const AUTORIZADOR_URLS: Record<Autorizador, AutorizadorUrls> = {
       NFeConsultaProtocolo: 'https://nfe.sefazrs.rs.gov.br/ws/NfeConsulta/NfeConsulta4.asmx',
       NFeStatusServico: 'https://nfe.sefazrs.rs.gov.br/ws/NfeStatusServico/NfeStatusServico4.asmx',
       RecepcaoEvento: 'https://nfe.sefazrs.rs.gov.br/ws/recepcaoevento/recepcaoevento4.asmx',
-      NFeInutilizacao: 'https://nfe.sefazrs.rs.gov.br/ws/nfeinutilizacao/nfeinutilizacao4.asmx'
+      NFeInutilizacao: 'https://nfe.sefazrs.rs.gov.br/ws/nfeinutilizacao/nfeinutilizacao4.asmx',
+      NFCeAutorizacao: '',
+      NFCeConsultaProtocolo: ''
     }
   },
   SP: {
@@ -231,7 +269,9 @@ export const AUTORIZADOR_URLS: Record<Autorizador, AutorizadorUrls> = {
       NFeConsultaProtocolo: 'https://homologacao.nfe.fazenda.sp.gov.br/ws/nfeconsultaprotocolo4.asmx',
       NFeStatusServico: 'https://homologacao.nfe.fazenda.sp.gov.br/ws/nfestatusservico4.asmx',
       RecepcaoEvento: 'https://homologacao.nfe.fazenda.sp.gov.br/ws/nferecepcaoevento4.asmx',
-      NFeInutilizacao: 'https://homologacao.nfe.fazenda.sp.gov.br/ws/nfeinutilizacao4.asmx'
+      NFeInutilizacao: 'https://homologacao.nfe.fazenda.sp.gov.br/ws/nfeinutilizacao4.asmx',
+      NFCeAutorizacao: '',
+      NFCeConsultaProtocolo: ''
     },
     producao: {
       NFeAutorizacao: 'https://nfe.fazenda.sp.gov.br/ws/nfeautorizacao4.asmx',
@@ -239,7 +279,9 @@ export const AUTORIZADOR_URLS: Record<Autorizador, AutorizadorUrls> = {
       NFeConsultaProtocolo: 'https://nfe.fazenda.sp.gov.br/ws/nfeconsultaprotocolo4.asmx',
       NFeStatusServico: 'https://nfe.fazenda.sp.gov.br/ws/nfestatusservico4.asmx',
       RecepcaoEvento: 'https://nfe.fazenda.sp.gov.br/ws/nferecepcaoevento4.asmx',
-      NFeInutilizacao: 'https://nfe.fazenda.sp.gov.br/ws/nfeinutilizacao4.asmx'
+      NFeInutilizacao: 'https://nfe.fazenda.sp.gov.br/ws/nfeinutilizacao4.asmx',
+      NFCeAutorizacao: '',
+      NFCeConsultaProtocolo: ''
     }
   },
   SVAN: {
@@ -249,7 +291,9 @@ export const AUTORIZADOR_URLS: Record<Autorizador, AutorizadorUrls> = {
       NFeConsultaProtocolo: 'https://hom.sefazvirtual.fazenda.gov.br/NFeConsultaProtocolo4/NFeConsultaProtocolo4.asmx',
       NFeStatusServico: 'https://hom.sefazvirtual.fazenda.gov.br/NFeStatusServico4/NFeStatusServico4.asmx',
       RecepcaoEvento: 'https://hom.sefazvirtual.fazenda.gov.br/NFeRecepcaoEvento4/NFeRecepcaoEvento4.asmx',
-      NFeInutilizacao: 'https://hom.sefazvirtual.fazenda.gov.br/NFeInutilizacao4/NFeInutilizacao4.asmx'
+      NFeInutilizacao: 'https://hom.sefazvirtual.fazenda.gov.br/NFeInutilizacao4/NFeInutilizacao4.asmx',
+      NFCeAutorizacao: '',
+      NFCeConsultaProtocolo: ''
     },
     producao: {
       NFeAutorizacao: 'https://www.sefazvirtual.fazenda.gov.br/NFeAutorizacao4/NFeAutorizacao4.asmx',
@@ -257,7 +301,9 @@ export const AUTORIZADOR_URLS: Record<Autorizador, AutorizadorUrls> = {
       NFeConsultaProtocolo: 'https://www.sefazvirtual.fazenda.gov.br/NFeConsultaProtocolo4/NFeConsultaProtocolo4.asmx',
       NFeStatusServico: 'https://www.sefazvirtual.fazenda.gov.br/NFeStatusServico4/NFeStatusServico4.asmx',
       RecepcaoEvento: 'https://www.sefazvirtual.fazenda.gov.br/NFeRecepcaoEvento4/NFeRecepcaoEvento4.asmx',
-      NFeInutilizacao: 'https://www.sefazvirtual.fazenda.gov.br/NFeInutilizacao4/NFeInutilizacao4.asmx'
+      NFeInutilizacao: 'https://www.sefazvirtual.fazenda.gov.br/NFeInutilizacao4/NFeInutilizacao4.asmx',
+      NFCeAutorizacao: '',
+      NFCeConsultaProtocolo: ''
     }
   },
   SVRS: {
@@ -267,7 +313,9 @@ export const AUTORIZADOR_URLS: Record<Autorizador, AutorizadorUrls> = {
       NFeConsultaProtocolo: 'https://nfe-homologacao.svrs.rs.gov.br/ws/NfeConsulta/NfeConsulta4.asmx',
       NFeStatusServico: 'https://nfe-homologacao.svrs.rs.gov.br/ws/NfeStatusServico/NfeStatusServico4.asmx',
       RecepcaoEvento: 'https://nfe-homologacao.svrs.rs.gov.br/ws/recepcaoevento/recepcaoevento4.asmx',
-      NFeInutilizacao: 'https://nfe-homologacao.svrs.rs.gov.br/ws/nfeinutilizacao/nfeinutilizacao4.asmx'
+      NFeInutilizacao: 'https://nfe-homologacao.svrs.rs.gov.br/ws/nfeinutilizacao/nfeinutilizacao4.asmx',
+      NFCeAutorizacao: '',
+      NFCeConsultaProtocolo: ''
     },
     producao: {
       NFeAutorizacao: 'https://nfe.svrs.rs.gov.br/ws/NfeAutorizacao/NFeAutorizacao4.asmx',
@@ -275,7 +323,9 @@ export const AUTORIZADOR_URLS: Record<Autorizador, AutorizadorUrls> = {
       NFeConsultaProtocolo: 'https://nfe.svrs.rs.gov.br/ws/NfeConsulta/NfeConsulta4.asmx',
       NFeStatusServico: 'https://nfe.svrs.rs.gov.br/ws/NfeStatusServico/NfeStatusServico4.asmx',
       RecepcaoEvento: 'https://nfe.svrs.rs.gov.br/ws/recepcaoevento/recepcaoevento4.asmx',
-      NFeInutilizacao: 'https://nfe.svrs.rs.gov.br/ws/nfeinutilizacao/nfeinutilizacao4.asmx'
+      NFeInutilizacao: 'https://nfe.svrs.rs.gov.br/ws/nfeinutilizacao/nfeinutilizacao4.asmx',
+      NFCeAutorizacao: '',
+      NFCeConsultaProtocolo: ''
     }
   },
   'SVC-AN': {
@@ -285,7 +335,9 @@ export const AUTORIZADOR_URLS: Record<Autorizador, AutorizadorUrls> = {
       NFeConsultaProtocolo: 'https://hom.sefazvirtual.fazenda.gov.br/NFeConsultaProtocolo4/NFeConsultaProtocolo4.asmx',
       NFeStatusServico: 'https://hom.sefazvirtual.fazenda.gov.br/NFeStatusServico4/NFeStatusServico4.asmx',
       RecepcaoEvento: 'https://hom.sefazvirtual.fazenda.gov.br/NFeRecepcaoEvento4/NFeRecepcaoEvento4.asmx',
-      NFeInutilizacao: 'https://hom.sefazvirtual.fazenda.gov.br/NFeInutilizacao4/NFeInutilizacao4.asmx'
+      NFeInutilizacao: 'https://hom.sefazvirtual.fazenda.gov.br/NFeInutilizacao4/NFeInutilizacao4.asmx',
+      NFCeAutorizacao: '',
+      NFCeConsultaProtocolo: ''
     },
     producao: {
       NFeAutorizacao: 'https://www.sefazvirtual.fazenda.gov.br/NFeAutorizacao4/NFeAutorizacao4.asmx',
@@ -293,7 +345,9 @@ export const AUTORIZADOR_URLS: Record<Autorizador, AutorizadorUrls> = {
       NFeConsultaProtocolo: 'https://www.sefazvirtual.fazenda.gov.br/NFeConsultaProtocolo4/NFeConsultaProtocolo4.asmx',
       NFeStatusServico: 'https://www.sefazvirtual.fazenda.gov.br/NFeStatusServico4/NFeStatusServico4.asmx',
       RecepcaoEvento: 'https://www.sefazvirtual.fazenda.gov.br/NFeRecepcaoEvento4/NFeRecepcaoEvento4.asmx',
-      NFeInutilizacao: 'https://www.sefazvirtual.fazenda.gov.br/NFeInutilizacao4/NFeInutilizacao4.asmx'
+      NFeInutilizacao: 'https://www.sefazvirtual.fazenda.gov.br/NFeInutilizacao4/NFeInutilizacao4.asmx',
+      NFCeAutorizacao: '',
+      NFCeConsultaProtocolo: ''
     }
   },
   'SVC-RS': {
@@ -303,7 +357,9 @@ export const AUTORIZADOR_URLS: Record<Autorizador, AutorizadorUrls> = {
       NFeConsultaProtocolo: 'https://nfe-homologacao.svrs.rs.gov.br/ws/NfeConsulta/NfeConsulta4.asmx',
       NFeStatusServico: 'https://nfe-homologacao.svrs.rs.gov.br/ws/NfeStatusServico/NfeStatusServico4.asmx',
       RecepcaoEvento: 'https://nfe-homologacao.svrs.rs.gov.br/ws/recepcaoevento/recepcaoevento4.asmx',
-      NFeInutilizacao: 'https://nfe-homologacao.svrs.rs.gov.br/ws/nfeinutilizacao/nfeinutilizacao4.asmx'
+      NFeInutilizacao: 'https://nfe-homologacao.svrs.rs.gov.br/ws/nfeinutilizacao/nfeinutilizacao4.asmx',
+      NFCeAutorizacao: '',
+      NFCeConsultaProtocolo: ''
     },
     producao: {
       NFeAutorizacao: 'https://nfe.svrs.rs.gov.br/ws/NfeAutorizacao/NFeAutorizacao4.asmx',
@@ -311,7 +367,9 @@ export const AUTORIZADOR_URLS: Record<Autorizador, AutorizadorUrls> = {
       NFeConsultaProtocolo: 'https://nfe.svrs.rs.gov.br/ws/NfeConsulta/NfeConsulta4.asmx',
       NFeStatusServico: 'https://nfe.svrs.rs.gov.br/ws/NfeStatusServico/NfeStatusServico4.asmx',
       RecepcaoEvento: 'https://nfe.svrs.rs.gov.br/ws/recepcaoevento/recepcaoevento4.asmx',
-      NFeInutilizacao: 'https://nfe.svrs.rs.gov.br/ws/nfeinutilizacao/nfeinutilizacao4.asmx'
+      NFeInutilizacao: 'https://nfe.svrs.rs.gov.br/ws/nfeinutilizacao/nfeinutilizacao4.asmx',
+      NFCeAutorizacao: '',
+      NFCeConsultaProtocolo: ''
     }
   }
 };

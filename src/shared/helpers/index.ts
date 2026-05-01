@@ -1,5 +1,5 @@
-export { calcMod11 } from './mod11';
-export { isValidCnpj, formatCnpj, cleanCnpj } from './cnpj';
-export { isValidCpf, formatCpf, cleanCpf } from './cpf';
-export { generateAccessKey, generateNumericCode } from './access-key';
-export type { AccessKeyParams } from './access-key';
+export { calcMod11 } from '@brasil-fiscal/core';
+export { isValidCnpj, formatCnpj, cleanCnpj } from '@brasil-fiscal/core';
+export { isValidCpf, formatCpf, cleanCpf } from '@brasil-fiscal/core';
+export { generateAccessKey, generateNumericCode } from '@brasil-fiscal/core';
+export type { AccessKeyParams } from '@brasil-fiscal/core';

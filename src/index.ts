@@ -24,26 +24,28 @@ export type { TransporteProps, VolumeProps, VeiculoTranspProps } from './domain/
 export type { PagamentoProps, FormaPagamentoProps } from './domain/entities/Pagamento';
 export type { CobrancaProps, FaturaProps, DuplicataProps } from './domain/entities/Cobranca';
 
-// Contracts
+// Contracts (re-exported from @brasil-fiscal/core)
 export type {
   CertificateProvider,
-  CertificateData
-} from './contracts/CertificateProvider';
-export type { SefazTransport, SefazRequest, SefazResponse } from './contracts/SefazTransport';
-export type { XmlBuilder } from './contracts/XmlBuilder';
-export type { XmlSigner } from './contracts/XmlSigner';
-export type {
+  CertificateData,
+  SefazTransport,
+  SefazRequest,
+  SefazResponse,
+  XmlSigner,
   SchemaValidator,
   ValidationResult,
   ValidationError
-} from './contracts/SchemaValidator';
+} from '@brasil-fiscal/core';
+export type { XmlBuilder } from './contracts/XmlBuilder';
 
-// Infrastructure
+// Infrastructure (re-exported from @brasil-fiscal/core)
+export {
+  A1CertificateProvider,
+  DefaultXmlSigner,
+  NodeHttpSefazTransport
+} from '@brasil-fiscal/core';
 export { DefaultXmlBuilder } from './infra/xml/DefaultXmlBuilder';
-export { DefaultXmlSigner } from './infra/xml/DefaultXmlSigner';
-export { A1CertificateProvider } from './infra/certificate/A1CertificateProvider';
 export { XsdSchemaValidator } from './infra/schema/XsdSchemaValidator';
-export { NodeHttpSefazTransport } from './infra/sefaz/NodeHttpSefazTransport';
 
 // Use cases
 export { TransmitNFeUseCase } from './application/use-cases/TransmitNFeUseCase';
@@ -68,7 +70,10 @@ export type { AnService, AnEnvironment } from './shared/constants/sefaz-an-urls'
 
 // Errors
 export { NFeError } from './shared/errors/NFeError';
-export { SchemaValidationError } from './shared/errors/SchemaValidationError';
-export type { FieldError } from './shared/errors/SchemaValidationError';
-export { SefazRejectError } from './shared/errors/SefazRejectError';
-export { CertificateError } from './shared/errors/CertificateError';
+export {
+  DFeError,
+  SchemaValidationError,
+  SefazRejectError,
+  CertificateError
+} from '@brasil-fiscal/core';
+export type { FieldError } from '@brasil-fiscal/core';

@@ -1,5 +1,5 @@
 export { NFeError } from './NFeError';
-export { SchemaValidationError } from './SchemaValidationError';
-export type { FieldError } from './SchemaValidationError';
-export { SefazRejectError } from './SefazRejectError';
-export { CertificateError } from './CertificateError';
+export { SchemaValidationError } from '@brasil-fiscal/core';
+export type { FieldError } from '@brasil-fiscal/core';
+export { SefazRejectError } from '@brasil-fiscal/core';
+export { CertificateError } from '@brasil-fiscal/core';

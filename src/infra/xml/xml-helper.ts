@@ -1,5 +1,6 @@
 export {
   escapeXml,
+  stripAccents,
   tag,
   tagGroup,
   formatNumber,

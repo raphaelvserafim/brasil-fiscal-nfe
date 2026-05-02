@@ -14,6 +14,7 @@ import {
   parseAutorizacaoResponse,
   SOAP_ACTIONS
 } from '@nfe/infra/sefaz/soap';
+import { stripAccents } from '@nfe/infra/xml/xml-helper';
 
 type TransmitDeps = {
   readonly xmlBuilder: XmlBuilder;
@@ -37,12 +38,19 @@ export class TransmitNFeUseCase {
     const { xmlBuilder, xmlSigner, certificate, transport, environment, uf, cIdToken, csc } =
       this.deps;
 
-    const xml = xmlBuilder.build(nfe);
+    let xml = xmlBuilder.build(nfe);
     const cert = await certificate.load();
+    const modelo = nfe.identificacao.modelo ?? '55';
+
+    // NFC-e: remove acentos do XML antes de assinar.
+    // Alguns endpoints NFC-e (ex: MT) rejeitam caracteres acentuados com erro 402.
+    if (modelo === '65') {
+      xml = stripAccents(xml);
+    }
+
     let signedXml = xmlSigner.sign(xml, cert);
 
     const sefazEnv = toSefazEnv(environment);
-    const modelo = nfe.identificacao.modelo ?? '55';
     const service = modelo === '65' ? 'NFCeAutorizacao' : 'NFeAutorizacao';
     const url = getSefazUrl(uf, sefazEnv, service);
 

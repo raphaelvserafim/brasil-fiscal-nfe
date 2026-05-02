@@ -78,7 +78,7 @@ function buildOfflineQRCode(params: NFCeQRCodeParams, nVersao: string): string {
 export function buildInfNFeSupl(qrCodeUrl: string, urlChave: string): string {
   return (
     '<infNFeSupl>' +
-    `<qrCode><![CDATA[${qrCodeUrl}]]></qrCode>` +
+    `<qrCode>${qrCodeUrl}</qrCode>` +
     `<urlChave>${urlChave}</urlChave>` +
     '</infNFeSupl>'
   );

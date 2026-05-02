@@ -42,7 +42,7 @@ const SAMPLE_NFCE_XML =
   '<SignedInfo><DigestValue>dGVzdA==</DigestValue></SignedInfo>' +
   '<SignatureValue>dGVzdA==</SignatureValue></Signature>' +
   '<infNFeSupl>' +
-  '<qrCode><![CDATA[https://homologacao.sefaz.mt.gov.br/nfce/consultanfce?p=51260411222333000181650010000000011123456789|2|2||323032362d30342d32385431303a30303a30302d30333a3030|39392e3830|302e3030|6457317459576431625342305a584e305a513d3d|000001|ABC123]]></qrCode>' +
+  '<qrCode>https://homologacao.sefaz.mt.gov.br/nfce/consultanfce?p=51260411222333000181650010000000011123456789|2|2||323032362d30342d32385431303a30303a30302d30333a3030|39392e3830|302e3030|6457317459576431625342305a584e305a513d3d|000001|ABC123</qrCode>' +
   '<urlChave>https://homologacao.sefaz.mt.gov.br/nfce/consultanfce</urlChave>' +
   '</infNFeSupl>' +
   '</NFe>' +

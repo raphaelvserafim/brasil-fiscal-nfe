@@ -80,13 +80,13 @@ describe('nfce-qrcode', () => {
   });
 
   describe('buildInfNFeSupl', () => {
-    it('deve gerar XML com qrCode em CDATA', () => {
+    it('deve gerar XML com qrCode sem CDATA', () => {
       const xml = buildInfNFeSupl(
         'https://example.com/qrcode?p=123',
         'https://example.com/consulta'
       );
       assert.ok(xml.includes('<infNFeSupl>'));
-      assert.ok(xml.includes('<qrCode><![CDATA[https://example.com/qrcode?p=123]]></qrCode>'));
+      assert.ok(xml.includes('<qrCode>https://example.com/qrcode?p=123</qrCode>'));
       assert.ok(xml.includes('<urlChave>https://example.com/consulta</urlChave>'));
       assert.ok(xml.includes('</infNFeSupl>'));
     });

@@ -146,7 +146,7 @@ describe('TransmitNFeUseCase - NFC-e', () => {
 
     const result = await useCase.execute(sampleNFCe);
     assert.ok(result.xmlProtocolado?.includes('<infNFeSupl>'));
-    assert.ok(result.xmlProtocolado?.includes('<qrCode><![CDATA['));
+    assert.ok(result.xmlProtocolado?.includes('<qrCode>'));
     assert.ok(result.xmlProtocolado?.includes('<urlChave>'));
   });
 

@@ -14,7 +14,7 @@ describe('soap', () => {
       const nfeXml = '<NFe xmlns="http://www.portalfiscal.inf.br/nfe"><infNFe>...</infNFe></NFe>';
       const envelope = buildAutorizacaoEnvelope(nfeXml);
 
-      assert.ok(envelope.includes('<soap12:Envelope'));
+      assert.ok(envelope.includes('<soap:Envelope'));
       assert.ok(envelope.includes('<enviNFe versao="4.00"'));
       assert.ok(envelope.includes('<idLote>1</idLote>'));
       assert.ok(envelope.includes('<indSinc>1</indSinc>'));
@@ -32,7 +32,7 @@ describe('soap', () => {
       const envelope = buildAutorizacaoEnvelope(nfeXml);
 
       const xmlDeclCount = (envelope.match(/<\?xml/g) ?? []).length;
-      assert.equal(xmlDeclCount, 1, 'deve ter apenas uma declaracao XML');
+      assert.equal(xmlDeclCount, 0, 'nao deve ter declaracao XML no envelope SOAP');
     });
   });
 

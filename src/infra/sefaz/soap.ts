@@ -24,10 +24,8 @@ export function buildAutorizacaoEnvelope(
   const innerXml = signedNFeXml.replace(/<\?xml[^?]*\?>\s*/g, '');
 
   return [
-    '<?xml version="1.0" encoding="UTF-8"?>',
-    '<soap12:Envelope xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">',
-    '<soap12:Header/>',
-    '<soap12:Body>',
+    '<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">',
+    '<soap:Body>',
     `<nfeDadosMsg xmlns="${WSDL_NAMESPACE.NFeAutorizacao4}">`,
     `<enviNFe versao="4.00" xmlns="${NFE_NAMESPACE}">`,
     `<idLote>${idLote}</idLote>`,
@@ -35,8 +33,8 @@ export function buildAutorizacaoEnvelope(
     innerXml,
     '</enviNFe>',
     '</nfeDadosMsg>',
-    '</soap12:Body>',
-    '</soap12:Envelope>'
+    '</soap:Body>',
+    '</soap:Envelope>'
   ].join('');
 }
 
@@ -48,10 +46,8 @@ export function buildConsultaEnvelope(
   tpAmb: '1' | '2'
 ): string {
   return [
-    '<?xml version="1.0" encoding="UTF-8"?>',
-    '<soap12:Envelope xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">',
-    '<soap12:Header/>',
-    '<soap12:Body>',
+    '<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">',
+    '<soap:Body>',
     `<nfeDadosMsg xmlns="${WSDL_NAMESPACE.NFeConsultaProtocolo4}">`,
     `<consSitNFe versao="4.00" xmlns="${NFE_NAMESPACE}">`,
     `<tpAmb>${tpAmb}</tpAmb>`,
@@ -59,8 +55,8 @@ export function buildConsultaEnvelope(
     `<chNFe>${chaveAcesso}</chNFe>`,
     '</consSitNFe>',
     '</nfeDadosMsg>',
-    '</soap12:Body>',
-    '</soap12:Envelope>'
+    '</soap:Body>',
+    '</soap:Envelope>'
   ].join('');
 }
 

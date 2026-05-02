@@ -81,18 +81,16 @@ export function wrapManifestacaoSoapEnvelope(signedEventoXml: string): string {
   const inner = signedEventoXml.replace(/<\?xml[^?]*\?>\s*/g, '');
 
   return [
-    '<?xml version="1.0" encoding="UTF-8"?>',
-    '<soap12:Envelope xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">',
-    '<soap12:Header/>',
-    '<soap12:Body>',
+    '<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">',
+    '<soap:Body>',
     `<nfeDadosMsg xmlns="${NFE_NAMESPACE}/wsdl/NFeRecepcaoEvento4">`,
     `<envEvento versao="1.00" xmlns="${NFE_NAMESPACE}">`,
     '<idLote>1</idLote>',
     inner,
     '</envEvento>',
     '</nfeDadosMsg>',
-    '</soap12:Body>',
-    '</soap12:Envelope>'
+    '</soap:Body>',
+    '</soap:Envelope>'
   ].join('');
 }
 

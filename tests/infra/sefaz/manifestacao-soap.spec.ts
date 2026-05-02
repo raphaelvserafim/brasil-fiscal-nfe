@@ -60,7 +60,7 @@ describe('manifestacao-soap', () => {
       const signedXml = '<evento versao="1.00"><infEvento>...</infEvento></evento>';
       const envelope = wrapManifestacaoSoapEnvelope(signedXml);
 
-      assert.ok(envelope.includes('<soap12:Envelope'));
+      assert.ok(envelope.includes('<soap:Envelope'));
       assert.ok(envelope.includes('<envEvento versao="1.00"'));
       assert.ok(envelope.includes('NFeRecepcaoEvento4'));
     });

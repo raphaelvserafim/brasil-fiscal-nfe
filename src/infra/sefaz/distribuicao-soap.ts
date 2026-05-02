@@ -19,10 +19,8 @@ export function buildDistNSUEnvelope(
   const nsuPadded = ultNSU.padStart(15, '0');
 
   return [
-    '<?xml version="1.0" encoding="UTF-8"?>',
-    '<soap12:Envelope xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">',
-    '<soap12:Header/>',
-    '<soap12:Body>',
+    '<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">',
+    '<soap:Body>',
     `<nfeDistDFeInteresse xmlns="${WSDL_NAMESPACE}">`,
     '<nfeDadosMsg>',
     `<distDFeInt versao="1.01" xmlns="${NFE_NAMESPACE}">`,
@@ -33,8 +31,8 @@ export function buildDistNSUEnvelope(
     '</distDFeInt>',
     '</nfeDadosMsg>',
     '</nfeDistDFeInteresse>',
-    '</soap12:Body>',
-    '</soap12:Envelope>'
+    '</soap:Body>',
+    '</soap:Envelope>'
   ].join('');
 }
 
@@ -48,10 +46,8 @@ export function buildConsChNFeEnvelope(
   chNFe: string
 ): string {
   return [
-    '<?xml version="1.0" encoding="UTF-8"?>',
-    '<soap12:Envelope xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">',
-    '<soap12:Header/>',
-    '<soap12:Body>',
+    '<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">',
+    '<soap:Body>',
     `<nfeDistDFeInteresse xmlns="${WSDL_NAMESPACE}">`,
     '<nfeDadosMsg>',
     `<distDFeInt versao="1.01" xmlns="${NFE_NAMESPACE}">`,
@@ -62,8 +58,8 @@ export function buildConsChNFeEnvelope(
     '</distDFeInt>',
     '</nfeDadosMsg>',
     '</nfeDistDFeInteresse>',
-    '</soap12:Body>',
-    '</soap12:Envelope>'
+    '</soap:Body>',
+    '</soap:Envelope>'
   ].join('');
 }
 
